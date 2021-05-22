@@ -1,6 +1,9 @@
 
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.*;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -47,8 +50,17 @@ public class HttpServerConnection {
                 response.addBody(html);
             }
         });
+        server.addHandler("GET", "/", new Handler()  {
+            public void handle(Request request, Response response) throws IOException  {
+                String html = "Hello " + request.getParameter("name") + "";
+                response.setResponseCode(200, "OK");
+                response.addHeader("Content-Type", "text/html");
+                response.addBody(html);
+            }
+        });
         server.addHandler("GET", "/*", new FileHandler());  // Default handler
         server.start();
+
     }
 
 

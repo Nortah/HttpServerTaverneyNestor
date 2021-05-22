@@ -79,7 +79,7 @@ public class Request {
         }
 
         if ("/".equals(path)) {
-            path = "C:\\Users\\Nestor\\IdeaProjects\\HttpServerTaverneyNestor\\src\\WebSite\\index.html";
+            path = "../index.html";
         }
         return true;
     }
