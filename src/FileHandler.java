@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -5,7 +6,9 @@ import java.io.IOException;
 public class FileHandler implements Handler {
     public void handle(Request request, Response response) throws IOException {
         try {
-            FileInputStream file = new FileInputStream(request.getPath().substring(1));
+            String basePath = new File("").getAbsolutePath();
+            File myFile = new File (basePath + "\\src\\index.html");
+            FileInputStream file = new FileInputStream(myFile);
             response.setResponseCode(200, "OK");
             response.addHeader("Content-Type", "text/html");
             StringBuffer buf = new StringBuffer();

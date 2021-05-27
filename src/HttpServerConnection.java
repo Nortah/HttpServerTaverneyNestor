@@ -1,12 +1,9 @@
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.*;
-import java.nio.file.Files;
 import java.util.*;
 import java.util.logging.Logger;
-
 public class HttpServerConnection {
     static int portNumber;
     //Initialise the logger
@@ -42,23 +39,19 @@ public class HttpServerConnection {
     //Server actions
     public static void main(String[] args) throws IOException  {
         HttpServerConnection server = new HttpServerConnection(8081);
-        server.addHandler("GET", "/hello", new Handler()  {
-            public void handle(Request request, Response response) throws IOException  {
-                String html = "Hello " + request.getParameter("name") + "";
-                response.setResponseCode(200, "OK");
-                response.addHeader("Content-Type", "text/html");
-                response.addBody(html);
-            }
+        server.addHandler("GET", "/hello", (request, response) -> {
+            String html = "Hello " + request.getParameter("name") + "";
+            response.setResponseCode(200, "OK");
+            response.addHeader("Content-Type", "text/html");
+            response.addBody(html);
         });
-        server.addHandler("GET", "/", new Handler()  {
-            public void handle(Request request, Response response) throws IOException  {
-                String html = "Hello " + request.getParameter("name") + "";
-                response.setResponseCode(200, "OK");
-                response.addHeader("Content-Type", "text/html");
-                response.addBody(html);
-            }
+        server.addHandler("GET", "/", (request, response) -> {
+            String html = "Hello " + request.getParameter("name") + "";
+            response.setResponseCode(200, "OK");
+            response.addHeader("Content-Type", "text/html");
+            response.addBody(html);
         });
-        server.addHandler("GET", "/*", new FileHandler());  // Default handler
+        server.addHandler("GET", "/file", new FileHandler());  // file handler
         server.start();
 
     }

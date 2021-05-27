@@ -78,9 +78,6 @@ public class Request {
                     components[1].indexOf("?") + 1));
         }
 
-        if ("/".equals(path)) {
-            path = "../index.html";
-        }
         return true;
     }
     private void parseQueryParameters(String queryString) {
