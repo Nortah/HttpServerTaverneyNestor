@@ -7,7 +7,7 @@ public class FileHandler implements Handler {
     public void handle(Request request, Response response) throws IOException {
         try {
             String basePath = new File("").getAbsolutePath();
-            File myFile = new File (basePath + "\\src\\index.html");
+            File myFile = new File (basePath + "\\src\\WebSite\\index.html");
             FileInputStream file = new FileInputStream(myFile);
             response.setResponseCode(200, "OK");
             response.addHeader("Content-Type", "text/html");

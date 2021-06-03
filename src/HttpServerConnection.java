@@ -45,13 +45,13 @@ public class HttpServerConnection {
             response.addHeader("Content-Type", "text/html");
             response.addBody(html);
         });
-        server.addHandler("GET", "/", (request, response) -> {
+        server.addHandler("POST", "/helloPost", (request, response) -> {
             String html = "Hello " + request.getParameter("name") + "";
             response.setResponseCode(200, "OK");
             response.addHeader("Content-Type", "text/html");
             response.addBody(html);
         });
-        server.addHandler("GET", "/file", new FileHandler());  // file handler
+        server.addHandler("GET", "/", new FileHandler());  // file handler
         server.start();
 
     }
