@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -14,6 +16,7 @@ public class Request {
     private String fullUrl;
     private Map<String, String> headers = new HashMap<String, String>();
     private Map<String, String> queryParameters = new HashMap<String, String>();
+    private Reader in;
     public Request(BufferedReader br) {
         this.br = br;
     }
@@ -90,5 +93,8 @@ public class Request {
                 queryParameters.put(parameter, null);
             }
         }
+    }
+    public InputStream getBody() throws IOException {
+        return new HttpInputStream(in, headers);
     }
 }

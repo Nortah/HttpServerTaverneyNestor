@@ -1,6 +1,7 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.*;
 import java.util.*;
 import java.util.logging.Logger;
@@ -20,6 +21,7 @@ public class HttpServerConnection {
         ServerSocket socket = new ServerSocket(portNumber);
         myLogger.info("Listening on port " + portNumber);
         Socket client;
+        //listen to multiple clients
         while ((client = socket.accept()) != null)  {
             myLogger.info("Received connection from " + client.getRemoteSocketAddress().toString());
             SocketHandler handler = new SocketHandler(client, handlers);
@@ -45,11 +47,26 @@ public class HttpServerConnection {
             response.addHeader("Content-Type", "text/html");
             response.addBody(html);
         });
-        server.addHandler("POST", "/helloPost", (request, response) -> {
-            String html = "Hello " + request.getParameter("name") + "";
-            response.setResponseCode(200, "OK");
-            response.addHeader("Content-Type", "text/html");
-            response.addBody(html);
+        server.addHandler("POST", "/hello", new Handler() {
+            public void handle(Request request, Response response) throws IOException {
+                StringBuffer buf = new StringBuffer();
+                InputStream in = request.getBody();
+                int c;
+                while ((c = in.read()) != -1) {
+                    buf.append((char) c);
+                }
+                String[] components = buf.toString().split("&");
+                Map<String, String> urlParameters = new HashMap<String, String>();
+                for (String component : components) {
+                    String[] pieces = component.split("=");
+                    urlParameters.put(pieces[0], pieces[1]);
+                }
+                String html = "<body>Welcome, " + urlParameters.get("username") + "</body>";
+
+                response.setResponseCode(200, "OK");
+                response.addHeader("Content-Type", "text/html");
+                response.addBody(html);
+            }
         });
         server.addHandler("GET", "/", new FileHandler());  // file handler
         server.start();
