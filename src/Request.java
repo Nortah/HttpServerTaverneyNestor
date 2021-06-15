@@ -41,11 +41,11 @@ public class Request {
         myLogger = ServerLogger.getMyLogger();
         String initialLine = br.readLine();
         myLogger.info(initialLine);
-        StringTokenizer tok = new StringTokenizer(initialLine);
+        StringTokenizer token = new StringTokenizer(initialLine);
         String[] components = new String[3];
         for (int i = 0; i < components.length; i++) {
-            if (tok.hasMoreTokens())  {
-                components[i] = tok.nextToken();
+            if (token.hasMoreTokens())  {
+                components[i] = token.nextToken();
             } else  {
                 return false;
             }
@@ -54,7 +54,7 @@ public class Request {
         method = components[0];
         fullUrl = components[1];
 
-        // Consume headers
+        // read headers
         while (true)  {
             String headerLine = br.readLine();
             myLogger.info(headerLine);
@@ -69,7 +69,7 @@ public class Request {
             headers.put(headerLine.substring(0, separator),
                     headerLine.substring(separator + 1));
         }
-
+        //parse variables with the ? sign
         if (components[1].indexOf("?") == -1) {
             path = components[1];
         } else  {

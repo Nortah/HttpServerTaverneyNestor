@@ -51,9 +51,10 @@ public class HttpServerConnection {
             response.addHeader("Content-Type", "text/html");
             response.addBody(html);
         });
-        server.addHandler("GET", "/", new FileHandler());  // file handler
-        server.start();
+        server.addHandler("GET", "/", new HtmlFileHandler());  //html file handler
 
+        server.addHandler("GET", "/image", new PngFileHandler()); //png file handler
+        server.start();
     }
 
 

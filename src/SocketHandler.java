@@ -55,7 +55,7 @@ public class SocketHandler implements Runnable {
                     break;
                 }
             }
-            myLogger.warning("Handler is found: " + foundHandler);
+            myLogger.info("Handler is found: " + foundHandler);
             if (!foundHandler)  {
                 if (methodHandlers.get("/*") != null) {
                     methodHandlers.get("/*").handle(request, response);

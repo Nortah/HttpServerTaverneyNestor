@@ -9,6 +9,7 @@ public class Response {
     private String statusMessage;
     private Map<String, String> headers = new HashMap<String, String>();
     private String body;
+    private byte[] byteBody;
     public Response(OutputStream os)  {
         this.os = os;
     }
@@ -20,10 +21,15 @@ public class Response {
     public void addHeader(String headerName, String headerValue)  {
         this.headers.put(headerName, headerValue);
     }
-
+    // Handle in char
     public void addBody(String body)  {
         headers.put("Content-Length", Integer.toString(body.length()));
         this.body = body;
+    }
+    // Handle in byte
+    public void addByteBody(byte[] byteBody)  {
+        headers.put("Content-Length", Integer.toString(byteBody.length));
+        this.byteBody = byteBody;
     }
     //send a correct request
     public void send() throws IOException {
@@ -35,6 +41,9 @@ public class Response {
         os.write("\r\n".getBytes());
         if (body != null) {
             os.write(body.getBytes());
+        } else if (byteBody != null)
+        {
+            os.write(byteBody);
         }
     }
 }

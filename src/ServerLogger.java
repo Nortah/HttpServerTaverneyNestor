@@ -21,7 +21,7 @@ public class ServerLogger {
         loggerPath = "c:\\logs\\"+year+month+"serverLogs.log";
         try{
             //Instantiate path of the logger
-            FileHandler fh = new FileHandler(loggerPath, true);
+            FileHandler fh = new FileHandler(loggerPath, false);
             myLogger.addHandler(fh);
             //Format the logs with our cutom class
             MyCustomFormatter formatter = new MyCustomFormatter();

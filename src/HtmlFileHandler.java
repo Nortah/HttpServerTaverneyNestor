@@ -3,7 +3,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class FileHandler implements Handler {
+public class HtmlFileHandler implements Handler {
     public void handle(Request request, Response response) throws IOException {
         try {
             String basePath = new File("").getAbsolutePath();
